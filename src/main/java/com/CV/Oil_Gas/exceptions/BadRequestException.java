@@ -1,0 +1,1 @@
+package com.CV.Oil_Gas.exceptions; public class BadRequestException extends RuntimeException { public BadRequestException(String message){super(message);} }
