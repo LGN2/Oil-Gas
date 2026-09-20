@@ -1,0 +1,1 @@
+package com.CV.Oil_Gas.exceptions; import java.time.LocalDateTime; public record ErrorResponse(int status,String error,String message,LocalDateTime timestamp) {}
