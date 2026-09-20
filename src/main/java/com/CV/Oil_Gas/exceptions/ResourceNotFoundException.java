@@ -1,0 +1,1 @@
+package com.CV.Oil_Gas.exceptions; public class ResourceNotFoundException extends RuntimeException { public ResourceNotFoundException(String message){super(message);} }
