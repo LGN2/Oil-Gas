@@ -1,0 +1,541 @@
+{
+  "info": {
+    "name": "Oil Gas Operations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Core setup",
+      "item": [
+        {
+          "name": "Create Field",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Fahud Field\",\n  \"location\": \"Oman\",\n  \"region\": \"Al Dhahirah\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/oil-fields"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"status 201\",()=>pm.response.to.have.status(201));",
+                  "if(pm.response.code<300){pm.environment.set(\"fieldId\",pm.response.json().id);}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Contractor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Drilling Co\",\n  \"email\": \"contractor@example.com\",\n  \"phoneNumber\": \"90000001\",\n  \"country\": \"Oman\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/contractors"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"status 201\",()=>pm.response.to.have.status(201));",
+                  "if(pm.response.code<300){pm.environment.set(\"contractorId\",pm.response.json().id);}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Rig",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Rig 1\",\n  \"model\": \"X100\",\n  \"capacity\": 1000,\n  \"contractorId\": \"{{contractorId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/rigs"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"status 201\",()=>pm.response.to.have.status(201));",
+                  "if(pm.response.code<300){pm.environment.set(\"rigId\",pm.response.json().id);}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Producing Well",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wellCode\": \"W-001\",\n  \"depth\": 2500,\n  \"type\": \"OIL\",\n  \"status\": \"PRODUCING\",\n  \"oilFieldId\": \"{{fieldId}}\",\n  \"rigId\": \"{{rigId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/wells"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"status 201\",()=>pm.response.to.have.status(201));",
+                  "if(pm.response.code<300){pm.environment.set(\"wellId\",pm.response.json().id);}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Tank",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tankCode\": \"T-001\",\n  \"capacity\": 10000,\n  \"currentLevel\": 1000,\n  \"product\": \"CRUDE_OIL\",\n  \"oilFieldId\": \"{{fieldId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/storage-tanks"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"status 201\",()=>pm.response.to.have.status(201));",
+                  "if(pm.response.code<300){pm.environment.set(\"tankId\",pm.response.json().id);}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Customer One\",\n  \"email\": \"customer@example.com\",\n  \"phoneNumber\": \"90000002\",\n  \"country\": \"Oman\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/customers"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"status 201\",()=>pm.response.to.have.status(201));",
+                  "if(pm.response.code<300){pm.environment.set(\"customerId\",pm.response.json().id);}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Personnel",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Operator One\",\n  \"role\": \"OPERATOR\",\n  \"phoneNumber\": \"90000003\",\n  \"certification\": \"HSE\",\n  \"contractorId\": \"{{contractorId}}\",\n  \"oilFieldId\": \"{{fieldId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/personnel"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"status 201\",()=>pm.response.to.have.status(201));",
+                  "if(pm.response.code<300){pm.environment.set(\"personnelId\",pm.response.json().id);}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Inspector",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Inspector One\",\n  \"licenseNumber\": \"INS-001\",\n  \"phoneNumber\": \"90000004\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/inspectors"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"status 201\",()=>pm.response.to.have.status(201));",
+                  "if(pm.response.code<300){pm.environment.set(\"inspectorId\",pm.response.json().id);}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Business operations",
+      "item": [
+        {
+          "name": "Record Production",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"readingDate\": \"2026-09-20\",\n  \"oilVolume\": 100,\n  \"gasVolume\": 50,\n  \"waterVolume\": 10,\n  \"wellId\": \"{{wellId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/operations/wells/{{wellId}}/production"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"status 200\",()=>pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Transfer To Tank",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": "{{baseUrl}}/operations/tanks/{{tankId}}/transfer?volume=500"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"status 200\",()=>pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Dispatch Shipment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shipmentDate\": \"2026-09-20\",\n  \"volume\": 200,\n  \"destination\": \"Muscat\",\n  \"status\": \"DISPATCHED\",\n  \"storageTankId\": \"{{tankId}}\",\n  \"customerId\": \"{{customerId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/operations/shipments/dispatch"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"status 200\",()=>pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Report Incident",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"incidentDate\": \"2026-09-20\",\n  \"severity\": \"LOW\",\n  \"description\": \"Postman test incident\",\n  \"status\": \"OPEN\",\n  \"oilFieldId\": \"{{fieldId}}\",\n  \"reportedById\": \"{{personnelId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/operations/incidents"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"status 200\",()=>pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Field Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/operations/fields/{{fieldId}}/stats"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"status 200\",()=>pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Contractor Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/operations/contractors/{{contractorId}}/stats"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"status 200\",()=>pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Producing Wells",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/operations/wells/producing"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"status 200\",()=>pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Tanks Above 90",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/operations/tanks/above-90-percent"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"status 200\",()=>pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Error cases",
+      "item": [
+        {
+          "name": "Missing Resource",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/wells/999999"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"status 404\",()=>pm.response.to.have.status(404));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Negative Production",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"readingDate\": \"2026-09-20\",\n  \"oilVolume\": -1,\n  \"gasVolume\": 0,\n  \"waterVolume\": 0,\n  \"wellId\": \"{{wellId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/operations/wells/{{wellId}}/production"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"status 400\",()=>pm.response.to.have.status(400));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
