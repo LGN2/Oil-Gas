@@ -15,6 +15,8 @@ public class OperationsController {
  @GetMapping("/fields/{id}/production") public Map<String,Object> production(@PathVariable Long id,@RequestParam LocalDate start,@RequestParam LocalDate end){return Map.of("fieldId",id,"totalOilVolume",service.totalOil(id,start,end));}
  @GetMapping("/wells/producing") public List<WellDTO> producing(){return service.producingWells();}
  @GetMapping("/tanks/above-90-percent") public List<StorageTankDTO> tanks(){return service.tanksAbove90();}
+ @GetMapping("/pipelines/due-inspection") public List<PipelineDTO> pipelinesDue(){return service.pipelinesDueForInspection();}
+ @GetMapping("/equipment/maintenance-cost-ranking") public List<EquipmentDTO> equipmentCost(){return service.equipmentByMaintenanceCost();}
  @GetMapping("/fields/{id}/stats") public Map<String,Object> fieldStats(@PathVariable Long id){return service.fieldStats(id);}
  @GetMapping("/contractors/{id}/stats") public Map<String,Object> contractorStats(@PathVariable Long id){return service.contractorStats(id);}
 }
